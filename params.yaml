@@ -1,2 +1,15 @@
-ResNet_Model:
-  params: values
+ResNet50:
+  input_tensor: Input(input_shape=224,224,3)
+  weights: imagenet
+  include_top: False
+  optimzer: adam
+  loss: categorical_crossentropy
+  epochs: 10
+
+VGG16:
+  input_tensor: Input(input_shape=224,224,3)
+  weights: imagenet
+  include_top: False
+  optimzer: adam
+  loss: categorical_crossentropy
+  epochs: 10

@@ -1,8 +1,8 @@
 import sys
 import os
-from src.utils.common import logger
-from src.components.data_ingestion import Data_Ingestion
-from src.configuration.configuration import Configuration_Manager
+from brain_tumor_classifier.utils.common import logger
+from brain_tumor_classifier.components.data_ingestion import Data_Ingestion
+from brain_tumor_classifier.config.configuration import Configuration_Manager
 
 STAGE_NAME = "Data Ingestion Stage"
 

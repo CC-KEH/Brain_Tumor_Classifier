@@ -1,6 +1,6 @@
-# Workflows:
+# Workflows
   
-## TODO:
+## TODO
 
 - [ ] Update configs.yaml
 - [ ] Update Config Entity
@@ -9,3 +9,4 @@
 - [ ] Update Configuration Managar
 - [ ] Update Component
 
+---

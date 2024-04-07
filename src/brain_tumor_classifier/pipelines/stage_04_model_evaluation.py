@@ -1,8 +1,8 @@
 import sys
 import os
-from src.utils.common import logger
-from src.components.model_evaluation import Model_Evaluation
-from src.configuration.configuration import Configuration_Manager
+from brain_tumor_classifier.utils.common import logger
+from brain_tumor_classifier.components.model_evaluation import Model_Evaluation
+from brain_tumor_classifier.config.configuration import Configuration_Manager
 
 STAGE_NAME = "Model Evaluation Stage"
 

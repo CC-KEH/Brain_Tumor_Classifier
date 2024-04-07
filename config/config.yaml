@@ -2,9 +2,8 @@ artifacts_root: artifacts
 
 Data_Ingestion:
   root_dir: artifacts/data_ingestion
-  source_URL: https://www.kaggle.com/datasets/sartajbhuvaji/brain-tumor-classification-mri/download?datasetVersionNumber=2
-  local_data_path: artifacts/data_ingestion/data.zip
-  unzip_dir: artifacts/data_ingestion
+  source_path: dataset
+  local_data_path: artifacts/data_ingestion/
 
 Data_Validation:
   root_dir: artifacts/data_validation
@@ -14,17 +13,17 @@ Data_Validation:
 Data_Transformation:
   root_dir: artifacts/data_transformation
   data_path: artifacts/data_ingestion
-  train_path: artifacts/data_transformation/train
-  test_path: artifacts/data_transformation/test
+  local_data_path: artifacts/data_transformation/datasets.pkl
 
 Model_Trainer:
   root_dir: artifacts/model_trainer
-  train_path: artifacts/data_ingestion/train
-  test_path: artifacts/data_ingestion/test/
+  train_path: artifacts/data_ingestion/Training
+  test_path: artifacts/data_ingestion/Testing/
   model_path: artifacts/model_trainer/
 
 Model_Evaluation:
   root_dir: artifacts/model_evaluation
-  test_data_path: artifacts/data_transformation/test/
+  test_data_path: artifacts/data_transformation/Testing/
   model_path: artifacts/model_trainer/
+  best_model_path: artifacts/model_evaluation/
   metric_file: artifacts/model_evaluation/

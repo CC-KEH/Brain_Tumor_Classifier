@@ -1,12 +1,11 @@
 import setuptools
-from setuptools import setup, find_packages
-from typing import List
 
 with open('README.md', 'r') as f:
     long_description = f.read()
 
 __version__ = "0.0.0"
 REPO_NAME = 'Brain_Tumor_Classifier'
+# SRC_REPO = 'brain_tumor_classifier'
 SRC_REPO = 'src'
 AUTHOR_NAME = 'CC-KEH'
 AUTHOR_EMAIL = 'example@example.com'

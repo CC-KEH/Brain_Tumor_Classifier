@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd
 from sklearn.pipeline import Pipeline
 import matplotlib.pyplot as plt
-from src.utils.common import load_binary_file, logger
-from src.entity.config_entity import Model_Evaluation_Config
+from brain_tumor_classifier.utils.common import load_binary_file, logger
+from brain_tumor_classifier.entity.config_entity import Model_Evaluation_Config
 import os
 
 
@@ -50,4 +50,6 @@ class Model_Evaluation:
         logger.info('Finished Evaluating Models, Outputs are saved in CWD')
         logger.info(
             f'Best Model found: {best_model} with Validation Accuracy {best_model_accuracy}')
+        best_model.save(os.path.join(
+            self.config.best_model_path, 'best_model.h5'))
         return (best_model, best_model_accuracy)

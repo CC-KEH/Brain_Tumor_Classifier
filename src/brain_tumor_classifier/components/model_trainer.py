@@ -8,7 +8,7 @@ from tensorflow.keras import regularizers
 from tensorflow.keras.utils import img_to_array, load_img
 from tensorflow.keras.layers import Input, Flatten, Dense, Dropout, BatchNormalization
 from keras.models import Sequential
-
+import keras.saving
 import numpy as np
 import pandas as pd
 from sklearn.pipeline import Pipeline
@@ -25,9 +25,12 @@ class Model_Trainer:
         input_shape = (224, 224, 3)
         self.vgg_base_model = VGG16(input_tensor=Input(shape=input_shape),
                                     weights=self.params['VGG16']['weights'],
+                                    pooling=self.params['VGG16']['pooling'],
                                     include_top=self.params['VGG16']['include_top'])
+
         self.resnet_base_model = ResNet50(input_tensor=Input(shape=input_shape),
                                           weights=self.params['ResNet50']['weights'],
+                                          pooling=self.params['ResNet50']['pooling'],
                                           include_top=self.params['ResNet50']['include_top'])
 
     def get_models(self):
@@ -66,20 +69,35 @@ class Model_Trainer:
         resnet_model.compile(optimizer=self.params['ResNet50']['optimizer'],
                              loss=self.params['ResNet50']['loss'], metrics=['accuracy'])
 
+        callback = keras.callbacks.EarlyStopping(monitor='loss', patience=5)
+
         # Train VGG16 model
-        vgg_model.fit(training_set, epochs=self.params['VGG16']['epochs'], validation_data=testing_set, steps_per_epoch=len(
-            training_set), validation_steps=len(testing_set))
+        vgg_model.fit(training_set, epochs=self.params['VGG16']['epochs'],
+                      validation_data=testing_set, steps_per_epoch=len(
+                          training_set),
+                      validation_steps=len(testing_set),
+                      callbacks=[callback]
+                      )
         logger.info('Finished Training VGG16 Model')
 
+        keras.saving.save_model(vgg_model, os.path.join(
+            self.config.model_path, 'vgg_model.keras'))
+
         # Train ResNet50 model
-        resnet_model.fit(training_set, epochs=self.params['ResNet50']['epochs'], validation_data=testing_set, steps_per_epoch=len(
-            training_set), validation_steps=len(testing_set))
+        resnet_model.fit(training_set, epochs=self.params['ResNet50']['epochs'],
+                         validation_data=testing_set, steps_per_epoch=len(
+                             training_set),
+                         validation_steps=len(testing_set),
+                         callbacks=[callback])
         logger.info('Finished Training ResNet50 Model')
 
-        # Save models
+        keras.saving.save_model(resnet_model, os.path.join(
+            self.config.model_path, 'resnet_model.keras'))
+
         vgg_model.save(os.path.join(self.config.model_path, 'vgg_model.h5'))
         resnet_model.save(os.path.join(
             self.config.model_path, 'resnet_model.h5'))
+
         logger.info(f'Saved both models at: {self.config.model_path}')
 
     def initiate_model_trainer(self, training_set, testing_set):

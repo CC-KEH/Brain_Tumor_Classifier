@@ -23,8 +23,6 @@ def copy_images(source_folder, destination_folder):
                 source_file_path = os.path.join(root, file)
                 destination_file_path = os.path.join(destination_dir, file)
                 shutil.copyfile(source_file_path, destination_file_path)
-                logger.info(
-                    f"Copied {source_file_path} to {destination_file_path}")
 
 
 @ensure_annotations

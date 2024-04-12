@@ -41,9 +41,9 @@ class Model_Evaluation:
 
     def initiate_model_evaluation(self):
         resnet_model = load_binary_file(os.path.join(
-            self.config.model_path, 'resnet_model.h5'))
+            self.config.model_path, 'resnet_model.keras'))
         vgg_model = load_binary_file(os.path.join(
-            self.config.model_path, 'vgg_model.h5'))
+            self.config.model_path, 'vgg_model.keras'))
 
         best_model, best_model_accuracy = self.evaluate_models(
             models=[vgg_model, resnet_model])

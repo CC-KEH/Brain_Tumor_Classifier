@@ -13,7 +13,7 @@ Data_Validation:
 Data_Transformation:
   root_dir: artifacts/data_transformation
   data_path: artifacts/data_ingestion
-  local_data_path: artifacts/data_transformation/datasets.pkl
+  local_data_path: artifacts/data_transformation/
 
 Model_Trainer:
   root_dir: artifacts/model_trainer

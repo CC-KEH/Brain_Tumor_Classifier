@@ -1,55 +1,31 @@
 import numpy as np
-import pandas as pd
-from sklearn.pipeline import Pipeline
-import matplotlib.pyplot as plt
-from brain_tumor_classifier.utils.common import load_binary_file, logger
-from brain_tumor_classifier.entity.config_entity import Model_Evaluation_Config
+from sklearn.metrics import accuracy_score
+from src.brain_tumor_classifier.utils.common import logger
+from src.brain_tumor_classifier.entity.config_entity import Model_Evaluation_Config
 import os
-
 
 class Model_Evaluation:
     def __init__(self, model_evaluation_config: Model_Evaluation_Config):
         self.config = model_evaluation_config
+        if not os.path.exists(self.config.metric_file):
+            os.makedirs(self.config.metric_file)
 
-    def evaluate_models(self, models):
-        best_model = models[0]
-        best_model_accuracy = models[0].history['val_accuracy']
-        for i, model in enumerate(models):
-            # Plot and save loss
-            plt.plot(model.history['loss'], label='Training Loss')
-            plt.plot(model.history['val_loss'], label='Validation Loss')
-            plt.legend()
-            plt.savefig(
-                f'{self.config.metric_file}/model_{i}_Loss_Val_Loss.png')
-            plt.close()
+    def evaluate_model(self, models, testing_set):
+        vgg_model = models[0]
 
-            # Plot and save accuracy
-            plt.plot(model.history['accuracy'], label='Training Accuracy')
-            plt.plot(model.history['val_accuracy'],
-                     label='Validation Accuracy')
-            plt.legend()
-            plt.savefig(
-                f'{self.config.metric_file}/model_{i}_Accuracy_Val_Accuracy.png')
-            plt.close()
+        preds_vgg = vgg_model.predict(testing_set)
+        
+        preds_vgg_classes = np.argmax(preds_vgg, axis=1)
 
-            # Update best model if necessary
-            if model.history['val_accuracy'] > best_model_accuracy:
-                best_model_accuracy = model.history['val_accuracy']
-                best_model = model
+        true_labels = testing_set.classes
 
-        return best_model, best_model_accuracy
+        accuracy_vgg = accuracy_score(true_labels, preds_vgg_classes)
 
-    def initiate_model_evaluation(self):
-        resnet_model = load_binary_file(os.path.join(
-            self.config.model_path, 'resnet_model.keras'))
-        vgg_model = load_binary_file(os.path.join(
-            self.config.model_path, 'vgg_model.keras'))
+        logger.info(f'VGG16 Model Accuracy: {accuracy_vgg}')
 
-        best_model, best_model_accuracy = self.evaluate_models(
-            models=[vgg_model, resnet_model])
-        logger.info('Finished Evaluating Models, Outputs are saved in CWD')
-        logger.info(
-            f'Best Model found: {best_model} with Validation Accuracy {best_model_accuracy}')
-        best_model.save(os.path.join(
-            self.config.best_model_path, 'best_model.h5'))
-        return (best_model, best_model_accuracy)
+        with open(os.path.join(self.config.metric_file, 'metrics.txt'), 'a') as f:
+            f.write(f'Model: VGG16 with Validation Accuracy {accuracy_vgg}\n')
+    
+    def initiate_model_evaluation(self,models,testing_set):
+        self.evaluate_model(models=models,testing_set=testing_set)
+        logger.info('Successfully evaluated the models.')

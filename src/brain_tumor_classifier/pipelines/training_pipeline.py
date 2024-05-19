@@ -1,10 +1,10 @@
-from brain_tumor_classifier.utils.common import logger
-from brain_tumor_classifier.components.data_ingestion import Data_Ingestion
-from brain_tumor_classifier.components.data_transformation import Data_Transformation
-from brain_tumor_classifier.components.model_trainer import Model_Trainer
-from brain_tumor_classifier.components.model_evaluation import Model_Evaluation
-from brain_tumor_classifier.components.model_trainer import Model_Trainer
-from brain_tumor_classifier.config.configuration import Configuration_Manager
+from src.brain_tumor_classifier.utils.common import logger
+from src.brain_tumor_classifier.components.data_ingestion import Data_Ingestion
+from src.brain_tumor_classifier.components.data_transformation import Data_Transformation
+from src.brain_tumor_classifier.components.model_trainer import Model_Trainer
+from src.brain_tumor_classifier.components.model_evaluation import Model_Evaluation
+from src.brain_tumor_classifier.components.model_trainer import Model_Trainer
+from src.brain_tumor_classifier.config.configuration import Configuration_Manager
 
 if __name__ == "__main__":
     try:
@@ -25,7 +25,7 @@ if __name__ == "__main__":
         config = Configuration_Manager()
         data_transformation_config = config.get_data_transformation_config()
         data_transformation = Data_Transformation(data_transformation_config)
-        data_transformation.initiate_data_transformation()
+        training_set,testing_set = data_transformation.initiate_data_transformation()
     except Exception as e:
         logger.info('Data Transformation Failed \n')
         raise e
@@ -39,7 +39,7 @@ if __name__ == "__main__":
         model_trainer_config, model_trainer_params = config.get_model_trainer_config()
         model_trainer = Model_Trainer(
             model_trainer_config, model_trainer_params)
-        model_trainer.initiate_model_trainer()
+        model_trainer.initiate_model_trainer(training_set)
     except Exception as e:
         logger.info('Model Training Failed \n')
         raise e
@@ -52,7 +52,7 @@ if __name__ == "__main__":
         config = Configuration_Manager()
         model_evaluation_config = config.get_model_evaluation_config()
         model_evaluation = Model_Evaluation(model_evaluation_config)
-        model_evaluation.initiate_model_evaluation()
+        model_evaluation.initiate_model_evaluation(testing_set)
     except Exception as e:
         logger.info('Data Evaluation Failed \n')
         raise e

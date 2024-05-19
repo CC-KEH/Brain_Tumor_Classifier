@@ -2,7 +2,7 @@ import os
 import shutil
 import yaml
 import json
-from brain_tumor_classifier.utils import logger
+from src.brain_tumor_classifier.utils import logger
 from box import ConfigBox
 from ensure import ensure_annotations
 from box.exceptions import BoxValueError

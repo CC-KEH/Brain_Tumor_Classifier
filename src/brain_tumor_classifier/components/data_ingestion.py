@@ -1,8 +1,8 @@
 import os
-from brain_tumor_classifier.utils.common import get_size, logger
-from brain_tumor_classifier.entity.config_entity import Data_Ingestion_Config
+from src.brain_tumor_classifier.utils.common import get_size, logger
+from src.brain_tumor_classifier.entity.config_entity import Data_Ingestion_Config
 from pathlib import Path
-from brain_tumor_classifier.utils.common import copy_images
+from src.brain_tumor_classifier.utils.common import copy_images
 
 
 class Data_Ingestion:

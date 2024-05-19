@@ -1,6 +1,6 @@
-from brain_tumor_classifier.utils.common import read_yaml, create_directories
-from brain_tumor_classifier.constant import *
-from brain_tumor_classifier.entity.config_entity import *
+from src.brain_tumor_classifier.utils.common import read_yaml, create_directories
+from src.brain_tumor_classifier.constant import *
+from src.brain_tumor_classifier.entity.config_entity import *
 import os
 
 

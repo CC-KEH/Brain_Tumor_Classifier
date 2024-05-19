@@ -1,4 +1,6 @@
-# Python Version 3.11.0
+# Python Version 3.11.0 
+# env_name: deep_learning_v2
+# tensorflow==2.11.0
 tensorflow
 numpy
 pandas

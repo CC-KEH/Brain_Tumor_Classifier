@@ -5,7 +5,8 @@ ResNet50:
   optimizer: rmsprop #adam
   pooling: avg #max, None
   loss: categorical_crossentropy
-  epochs: 10
+  epochs: 5
+  metrics: accuracy
 
 VGG16:
   input_tensor: Input(input_shape=224,224,3)
@@ -14,4 +15,5 @@ VGG16:
   optimizer: rmsprop #adam
   pooling: avg #max, None
   loss: categorical_crossentropy
-  epochs: 10
+  metrics: accuracy
+  epochs: 1

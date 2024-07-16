@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Brain Tumor Prediction</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <style>
+        body{
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            height: 90vh;
+            background-image: url('{{ url_for("static", filename="images/doctor.jpg") }}');
+            background-size: cover;
+            
+        }
+        h1{
+            font-weight: bolder;
+            font-family: sans-serif;
+            position: absolute;
+            left: 100px;
+            bottom: 300px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>The Patient suffers from {{ prediction }}.</h1>
+        <div>
+</html>

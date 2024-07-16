@@ -1,5 +1,7 @@
 # Brain Tumor Classifier
 
+![Main Page Image](images/main.png)
+
 ## Project Overview
 
 The Brain Tumor Classifier project aims to classify brain MRI images into four categories: glioma, meningioma, no tumor, and pituitary tumor. This project leverages a pre-trained VGG model to achieve high accuracy in classification. The goal is to aid in the early detection and diagnosis of brain tumors, improving treatment outcomes.

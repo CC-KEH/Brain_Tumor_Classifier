@@ -6,18 +6,20 @@ from src.brain_tumor_classifier.components.model_predict import Model_Predict
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 
-@app.route('/')
+@app.route('/',methods=['GET'])
 def home():
     return render_template('index.html')
 
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    predictor = Model_Predict()
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file part'}), 400
+@app.route('/predict',methods=['POST'])
+def predict():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file part'}), 400
     file = request.files['file']
+    predictor = Model_Predict()
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
+    
     if file:
         filename = secure_filename(file.filename)
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -32,8 +34,8 @@ def upload_file():
         elif prediction == 3:
             prediction = 'Pituitary Tumor'
         
-        return jsonify({'prediction': prediction})
-    pass
-
+        return render_template('prediction.html', prediction=prediction)
+    
+    
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080,debug=True)

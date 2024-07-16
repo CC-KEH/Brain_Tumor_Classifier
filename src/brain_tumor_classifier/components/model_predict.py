@@ -9,7 +9,10 @@ class Model_Predict:
         self.model = load_model('artifacts/model_trainer/vgg.h5')
 
     def predict(self, img):
-        img=img/255
+        if not isinstance(img, np.ndarray):
+            raise TypeError("img must be a numpy array")
+        
+        img=img/255.0
         img=np.expand_dims(img,axis=0)
         img_data=preprocess_input(img)
         prediction = np.argmax(self.model.predict(img_data), axis=1)
@@ -19,8 +22,8 @@ class Model_Predict:
         try:
             logger.info('>>>>>>> Prediction Pipeline Started <<<<<<<')
             img = image.load_img(img_path, target_size=(224,224))
-            img = image.img_to_array(img)
-            prediction = self.predict(image)
+            img = np.asarray(img)
+            prediction = self.predict(img)
             logger.info('>>>>>>> Prediction Pipeline Completed <<<<<<<\n\nx============================x')
         except Exception as e:
             logger.exception(e)
